@@ -11,13 +11,14 @@ set -u
 set -o pipefail
 
 SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
-CONFIG_ENV_FILE="${SCRIPT_DIR}/../etc/remarkable-unsplash/config.env"
 
 # Load user-provided config if one exists
-if [ -f "$CONFIG_ENV_FILE" ]; then
-	# shellcheck source=/dev/null
-	. "$CONFIG_ENV_FILE"
-fi
+for config_env_file in "${SCRIPT_DIR}/../etc/remarkable-unsplash/config.env" "./config.env"; do
+	if [ -f "$config_env_file" ]; then
+		# shellcheck source=/dev/null
+		. "$config_env_file"
+	fi
+done
 
 # Default config, all of this overridable from $CONFIG_ENV_FILE
 : "${UNSPLASH_KEYWORDS:=abstract,grayscale}"

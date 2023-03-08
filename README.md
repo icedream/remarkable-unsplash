@@ -5,7 +5,15 @@ Unsplash[^unsplash].
 
 ## Configuration
 
-The script will check for a file `etc/remarkable-unsplash/config.env` which can contain the following values:
+The script will check for a configuration file `config.env` which is loaded as a
+shell script. It is expected to set values with the `KEY=VALUE` syntax.
+
+The `config.env` file can be placed into the current working directory (usually
+the path where you are executing the script). It will additionally search in
+`../etc/remarkable-unsplash/config.env` relative to the script's location to
+ease configuration in package manager-based installations such as Toltec.
+
+The configuration file which can contain the following values:
 
 | Name                          | Default                                                                     | Description                                                                                                                                                                                        |
 | ----------------------------- | --------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
