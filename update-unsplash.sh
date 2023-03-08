@@ -61,12 +61,12 @@ convert_image() {
 	inverted_orig=(\( "${SUSPENDED_BACKUP_IMAGE_PATH}" -channel RGB -negate \))
 	args=()
 
-	if [ "${SUSPENDED_DITHER}" -ne 0 ]; then
+	if [ "${SUSPENDED_COMPOSE}" -ne 0 ]; then
 		args+=("${inverted_orig[@]}")
 		composite_args+=("${magick_convert_composite_args[@]}")
 	fi
 
-	if [ "${SUSPENDED_COMPOSE}" -ne 0 ]; then
+	if [ "${SUSPENDED_DITHER}" -ne 0 ]; then
 		args+=("${magick_convert_dither_args[@]}")
 	fi
 
