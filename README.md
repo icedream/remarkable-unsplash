@@ -3,6 +3,21 @@
 Simple script to update the suspended screen with a random image from
 Unsplash[^unsplash].
 
+## What does this do?
+
+The script will first check if a backup of the suspended image exists, and if
+not will create one.
+
+Next, the script will download a random image from Unsplash and process it with
+ImageMagick. By default, it will overlay an inverted version of the original
+suspended image on top of the new one so it still says "ReMarkable is sleeping."
+The resulting image is then installed as the new suspended image.
+
+Many of the aspects are configurable, including the full source URL so you can
+use any web server URL you want, whether and how it does the overlaying of the
+original image, etc. Check the Configuration section for all configurable
+values.
+
 ## Known caveats
 
 The script takes a minute to run on default settings due to its use of
