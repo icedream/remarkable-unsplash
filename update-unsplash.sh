@@ -31,6 +31,7 @@ done
 : "${SUSPENDED_DITHER:=1}"
 : "${SUSPENDED_REMAP_PALETTE:=1}"
 : "${SUSPENDED_COMPOSE:=1}"
+: "${SUSPENDED_COMPOSE_INVERT:=1}"
 : "${SUSPENDED_COMPOSITE_METHOD:=lighten}"
 
 # Some internal tweakables
@@ -53,16 +54,20 @@ palette_b64="iVBORw0KGgoAAAANSUhEUgAAAAwAAAABCAIAAABlidhuAAAALElEQVQImQXBsREAMAg
 
 convert_image() {
 	local composite_args
-	local inverted_orig
+	local overlay
 	local args
 
 	composite_args=()
 	# TODO - get rid of warning about RGB colorspace being incompatible here
-	inverted_orig=(\( "${SUSPENDED_BACKUP_IMAGE_PATH}" -channel RGB -negate \))
+	if [ "${SUSPENDED_COMPOSE_INVERT}" -ne 0 ]; then
+		overlay=(\( "${SUSPENDED_BACKUP_IMAGE_PATH}" -channel RGB -negate \))
+	else
+		overlay=("${SUSPENDED_BACKUP_IMAGE_PATH}")
+	fi
 	args=()
 
 	if [ "${SUSPENDED_COMPOSE}" -ne 0 ]; then
-		args+=("${inverted_orig[@]}")
+		args+=("${overlay[@]}")
 		composite_args+=("${magick_convert_composite_args[@]}")
 	fi
 
