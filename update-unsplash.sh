@@ -30,6 +30,7 @@ done
 : "${SUSPENDED_TEMP_IMAGE_PATH:=$(dirname "${SUSPENDED_IMAGE_PATH}")/suspended.new.png}"
 : "${SUSPENDED_DITHER:=1}"
 : "${SUSPENDED_REMAP_PALETTE:=1}"
+: "${SUSPENDED_COMPOSE:=1}"
 : "${SUSPENDED_COMPOSITE_METHOD:=lighten}"
 
 # Some internal tweakables
@@ -51,27 +52,34 @@ magick_convert_composite_args=(
 palette_b64="iVBORw0KGgoAAAANSUhEUgAAAAwAAAABCAIAAABlidhuAAAALElEQVQImQXBsREAMAgDscv+y3gsCv7ABRRUkd7dZSYwM7sLSLIdEd0NVNUHZvwhAvmSVioAAAAASUVORK5CYII="
 
 convert_image() {
+	local composite_args
 	local inverted_orig
 	local args
 
+	composite_args=()
 	# TODO - get rid of warning about RGB colorspace being incompatible here
 	inverted_orig=(\( "${SUSPENDED_BACKUP_IMAGE_PATH}" -channel RGB -negate \))
 	args=()
 
 	if [ "${SUSPENDED_DITHER}" -ne 0 ]; then
+		args+=("${inverted_orig[@]}")
+		composite_args+=("${magick_convert_composite_args[@]}")
+	fi
+
+	if [ "${SUSPENDED_COMPOSE}" -ne 0 ]; then
 		args+=("${magick_convert_dither_args[@]}")
 	fi
 
 	if [ "${SUSPENDED_REMAP_PALETTE}" -ne 0 ]; then
-		magick convert - "${inverted_orig[@]}" \
+		magick convert - \
 			"${args[@]}" \
 			-remap png:<(openssl base64 -d <<<"$palette_b64") -type Palette \
-			"${magick_convert_composite_args[@]}" \
+			"${composite_args[@]}" \
 			"$@"
 	else
-		magick convert - "${inverted_orig[@]}" \
+		magick convert - \
 			"${args[@]}" \
-			"${magick_convert_composite_args[@]}" \
+			"${composite_args[@]}" \
 			"$@"
 	fi
 }

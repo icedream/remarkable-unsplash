@@ -8,8 +8,8 @@ Unsplash[^unsplash].
 The script takes a minute to run on default settings due to its use of
 ImageMagick for processing. This is fine for the intended use-case of running
 this in the background at a schedule. But you can choose to disable certain
-processing features (see Configuration section, specifically `SUSPENDED_DITHER`
-and `SUSPENDED_REMAP_PALETTE`).
+processing features (see Configuration section, specifically
+`SUSPENDED_COMPOSE`, `SUSPENDED_DITHER` and `SUSPENDED_REMAP_PALETTE`).
 
 The script also currently prints a warning `RGB color space not permitted on
 grayscale PNG` which can be ignored. This will be fixed later.
@@ -37,6 +37,7 @@ The configuration file which can contain the following values:
 | `SUSPENDED_TEMP_IMAGE_PATH`   | `$(dirname "${SUSPENDED_IMAGE_PATH}")/suspended.new.png`                    | The path where the script will temporarily write the processed image to.                                                                                                                           |
 | `SUSPENDED_DITHER`            | `1`                                                                         | Whether to apply dithering during image processing through ImageMagick. This is computationally expensive so if you prefer to reduce the CPU usage/runtime of this script you can set this to `0`. |
 | `SUSPENDED_REMAP_PALETTE`     | `1`                                                                         | Whether to remap the image palette during image processing. You may prefer to reduce the CPU usage/runtime of this script by setting this to `0`.                                                  |
+| `SUSPENDED_COMPOSE`           | `1`                                                                         | Whether to overlay the original suspended image on top of the Unsplash one. You may prefer to reduce the CPU usage/runtime of this script by setting this to `0`.                                  |
 | `SUSPENDED_COMPOSITE_METHOD`  | `lighten`                                                                   | Which compositing method to use for layering the original suspend image on top of the Unsplash one. See the ImageMagick documentation for more info.[^compose]                                     |
 
 [^unsplash]: https://unsplash.com
