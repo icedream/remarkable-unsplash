@@ -25,7 +25,7 @@ fi
 : "${UNSPLASH_URL:=https://source.unsplash.com/random/${UNSPLASH_SIZE}/?${UNSPLASH_KEYWORDS}}"
 : "${SUSPENDED_AUTO_BACKUP:=1}"
 : "${SUSPENDED_IMAGE_PATH:=/usr/share/remarkable/suspended.png}"
-: "${SUSPENDED_BACKUP_IMAGE_PATH:=/usr/share/remarkable/suspended.backup.png}"
+: "${SUSPENDED_BACKUP_IMAGE_PATH:=$(dirname "${SUSPENDED_IMAGE_PATH}")/suspended.backup.png}"
 : "${SUSPENDED_TEMP_IMAGE_PATH:=$(dirname "${SUSPENDED_IMAGE_PATH}")/suspended.new.png}"
 : "${SUSPENDED_DITHER:=1}"
 : "${SUSPENDED_REMAP_PALETTE:=1}"
