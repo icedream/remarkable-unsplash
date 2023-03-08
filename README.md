@@ -3,6 +3,17 @@
 Simple script to update the suspended screen with a random image from
 Unsplash[^unsplash].
 
+## Known caveats
+
+The script takes a minute to run on default settings due to its use of
+ImageMagick for processing. This is fine for the intended use-case of running
+this in the background at a schedule. But you can choose to disable certain
+processing features (see Configuration section, specifically `SUSPENDED_DITHER`
+and `SUSPENDED_REMAP_PALETTE`).
+
+The script also currently prints a warning `RGB color space not permitted on
+grayscale PNG` which can be ignored. This will be fixed later.
+
 ## Configuration
 
 The script will check for a configuration file `config.env` which is loaded as a
