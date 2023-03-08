@@ -3,6 +3,8 @@
 Simple script to update the suspended screen with a random image from
 Unsplash[^unsplash].
 
+![Demonstrational video](docs/videos/rmunsplash_demo_short.mp4)
+
 ## What does this do?
 
 The script will first check if a backup of the suspended image exists, and if
